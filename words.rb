@@ -22,7 +22,6 @@ class Words
 
   def guess(guess)
     guess_array = guess.split("")
-    # word_array = @word.split("")
 
     g_index = 0
     guess_array.each do |g_letter|
@@ -35,7 +34,8 @@ class Words
       end
       g_index += 1
     end
-
+    @board.board_guesses << guess_array
+    puts "You win" if @board.winner?(@turn)
     @turn += 1
   end
 

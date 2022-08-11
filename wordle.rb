@@ -1,11 +1,10 @@
+require "gosu"
 require_relative "words"
 
-game = Words.new
-
-while true
-  p game.board.board
-  puts
-  p "Input your guess"
-  input = gets.chomp
-  game.guess(input)
+class Wordle < Gosu::Window
+  def initialize
+    super 800, 600
+    self.caption = "Wordle"
+    @game = Words.new
+  end
 end

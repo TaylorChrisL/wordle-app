@@ -1,4 +1,5 @@
 class Gameboard
+  attr_accessor :board_guesses
   attr_reader :board
 
   def initialize
@@ -10,6 +11,7 @@ class Gameboard
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ]
+    @board_guesses = []
   end
 
   def right_letter(row, column)
@@ -20,7 +22,10 @@ class Gameboard
     @board[row][column] = 2
   end
 
-  def winner(turn)
+  def winner?(turn)
     @board[turn].each do |square|
+      return false if square != 2
+    end
+    return true
   end
 end
