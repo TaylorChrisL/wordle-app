@@ -1,8 +1,10 @@
-class Gameboard
-  attr_accessor :board_guesses
-  attr_reader :board
+require_relative "keyboard"
 
-  def initialize
+class Gameboard
+  attr_accessor :board_guesses, :current_guess, :words
+  attr_reader :board, :keyboard
+
+  def initialize(words)
     @board = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
@@ -11,7 +13,11 @@ class Gameboard
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ]
+    @words = words
+    @current_guess = []
     @board_guesses = []
+    @keyboard = Keyboard.new(self)
+    @show_invalid = false
   end
 
   def right_letter(row, column)
