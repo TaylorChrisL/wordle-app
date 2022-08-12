@@ -75,6 +75,7 @@ class Wordle < Gosu::Window
 
   def draw_previous_guesses
     y = 0
+    y_add = 0
     @game.board.board_guesses.each do |row|
       x = 0
       if y > 3
