@@ -12,8 +12,11 @@ class Wordle < Gosu::Window
   def draw
     @background.draw(0, 0, 0)
     draw_board()
+    draw_current_guess()
+    draw_previous_guesses()
   end
 
+  # Draws background colors for previous guesses
   def draw_board
     y = 0
     y_add = 0
@@ -47,6 +50,9 @@ class Wordle < Gosu::Window
       end
       y += 1
     end
+  end
+
+  def draw_current_guess
     x_add = 0
     x = 0
     y = @game.board.board_guesses.length
@@ -65,6 +71,9 @@ class Wordle < Gosu::Window
       Gosu::Image.from_text(letter, 35, options = { :width => 32, :align => :center }).draw(290 + (42 * x) + x_add, 77 + (46 * y) + y_add, 2, scale_x = 1, scale_y = 1, color = Gosu::Color::BLACK)
       x += 1
     end
+  end
+
+  def draw_previous_guesses
     y = 0
     @game.board.board_guesses.each do |row|
       x = 0
