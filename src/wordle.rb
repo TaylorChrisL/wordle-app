@@ -7,6 +7,7 @@ class Wordle < Gosu::Window
     self.caption = "Wordle"
     @game = Words.new
     @background = Gosu::Image.new("media/wordle_background.png", :tileable => true)
+    @play_again = false
   end
 
   def draw
@@ -14,6 +15,8 @@ class Wordle < Gosu::Window
     draw_board()
     draw_current_guess()
     draw_previous_guesses()
+    draw_invalid_guess()
+    draw_end_of_game()
   end
 
   # Draws background colors for previous guesses
@@ -97,10 +100,37 @@ class Wordle < Gosu::Window
     end
   end
 
+  def draw_invalid_guess
+    if @game.show_invalid
+      Gosu::Image.from_text("Word not in Wordle Dictionary", 40, options = { :width => 200, :align => :center }).draw(30, 60, 2, scale_x = 1, scale_y = 1, color = Gosu::Color::RED)
+    end
+  end
+
+  def draw_end_of_game
+    if @game.board.winner?(@game.turn - 1)
+      @play_again = true
+      Gosu::Image.from_text("YOU WIN!!!", 40, options = { :width => 200, :align => :center }).draw(525, 60, 2, scale_x = 1, scale_y = 1, color = Gosu::Color::BLACK)
+    elsif @game.turn == 6
+      @play_again = true
+      Gosu::Image.from_text("You Lose =(", 40, options = { :width => 200, :align => :center }).draw(525, 60, 2, scale_x = 1, scale_y = 1, color = Gosu::Color::BLACK)
+    end
+    if @play_again
+      Gosu::Image.from_text("Press P to play again or Q to quit", 40, options = { :width => 200, :align => :center }).draw(525, 115, 2, scale_x = 1, scale_y = 1, color = Gosu::Color::BLACK)
+    end
+  end
+
   def update
   end
 
   def button_down(id)
-    @game.board.keyboard.button_down_keyboard(id, mouse_x, mouse_y)
+    if @play_again
+      if id == Gosu::KbP
+        initialize()
+      elsif id == Gosu::KbQ
+        close
+      end
+    else
+      @game.board.keyboard.button_down_keyboard(id, mouse_x, mouse_y)
+    end
   end
 end

@@ -282,7 +282,6 @@ class Words
       g_index += 1
     end
     @board.board_guesses << guess_array
-    puts "You win" if @board.winner?(@turn)
     @turn += 1
   end
 
