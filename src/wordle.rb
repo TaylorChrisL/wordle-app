@@ -133,4 +133,8 @@ class Wordle < Gosu::Window
       @game.board.keyboard.button_down_keyboard(id, mouse_x, mouse_y)
     end
   end
+
+  def needs_cursor?
+    true
+  end
 end

@@ -267,7 +267,6 @@ class Words
   end
 
   def guess(guess)
-    p guess
     guess_array = guess.split("")
 
     g_index = 0
